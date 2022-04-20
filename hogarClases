@@ -1,0 +1,299 @@
+class Hogar():
+    '''
+    Clase hogar basico. Necesita almenos dos parametros:
+    Material: Material con el que se contruye la casa
+    Numero de paredes: Cuantas paredes quieres que tenga tu casa
+    '''
+    def __init__(self, material=None, numParedes=None):
+        self.__material = material
+        self.__numParedes = numParedes
+    
+    @property
+    def material(self):
+        return self.__material
+    @material.setter
+    def material(self, newMaterial):
+        self.__material = newMaterial
+        
+    @property
+    def numParedes(self):
+        return self.__numParedes
+    @numParedes.setter
+    def numParedes(self, newParedes):
+        self.__numParedes = newParedes
+#Este es un metodo de la superclase de todas las demas, que solo esta aqui, pero puede ser llamado por cualquiera de los hijos
+    def demoler(self):
+        self.__numParedes = 0
+        print("Se han demolido las paredes de tu casa!!")
+#Este es el metodo que todas las clases poseeran, para poder hacer polimorfismo   
+    def info(self):
+        print("HOGAR:\nHogar basico donde se puede dormir y hacer vida util. No contiene ningun extra")
+                
+    def __str__(self):
+        return '''
+        -HOGAR-
+        Material: {}
+        Numero de paredes: {}\n'''.format(self.__material, self.__numParedes) + "="*40
+
+#Clase CHALE, que hereda de HOGAR
+class Chale(Hogar):
+    '''
+    Clase chale. Necesita almenos cuatro parametros:
+    Material: Material con el que se contruye la casa
+    Numero de paredes: Cuantas paredes quieres que tenga tu casa
+    Jardin: Si quieres que tu casa posea jardin (True o False)
+    Numero de habitaciones: Cuantas habitaciones quieres para tu casa
+    '''
+    def __init__(self, material=None, numParedes=None, jardin=None, numHabitaciones=None):
+        Hogar.__init__(self, material, numParedes)
+        self.__jardin = jardin
+        self.__numHabitaciones = numHabitaciones
+        if self.__jardin == True:
+            self.__jardin = "Si"
+        else:
+            self.__jardin = "No"
+        
+    def info(self):
+        print("CHALE:\nVivienda unifamiliar con una planta, generalmente rodeada de terreno ajardinado")
+        
+    def __str__(self):
+        return '''
+        -CHALE-
+        Material: {}
+        Numero de paredes: {}
+        Jardin delantero:{}
+        Numero de habitaciones: {}'''.format(self.material,self.numParedes,self.__jardin,
+                                             self.__numHabitaciones) + "\n" + "="*40
+    
+    @property
+    def jardin(self):
+        return self.__jardin
+    @jardin.setter
+    def jardin(self, newJardin):
+        self.__jardin = newJardin
+        
+    @property
+    def numHabitaciones(self):
+        return self.__numHabitaciones
+    @numHabitaciones.setter
+    def numHabitaciones(self, newHabitaciones):
+        self.__numHabitaciones = newHabitaciones
+
+#Clase ADOSADO, que hereda de HOGAR tambien
+class Adosado(Hogar):
+    '''
+    Clase Adosado. Necesita almenos tres parametros:
+    Material: Material con el que se contruye la casa
+    Numero de paredes: Cuantas paredes quieres que tenga tu casa
+    Jardin delantero: Si quieres que tu casa posea jardin delantero (True o False)
+    '''
+    def __init__(self, material=None, numParedes=None, jardinDelantero = None):
+        Hogar.__init__(self, material, numParedes)
+        self.__jardinDelantero = jardinDelantero
+#Esto es un pequeño apaño para que las clases con datos boolenos, a la hora de visualizar la informacion con prints,
+#sea mas facil de leer, y tambien quede mejor
+        if self.__jardinDelantero == True:
+            self.__jardinDelantero = "Si"
+        else:
+            self.__jardinDelantero = "No"
+        
+    def info(self):
+        print("ADOSADO:\nVivienda unifamiliar con una planta, con viviendas similares a los lados, y generalmente ajardinado")
+    
+    def __str__(self):
+        return '''
+        -ADOSADO-
+        Material: {}
+        Numero de paredes: {}
+        Jardin delantero:{}'''.format(self.material,self.numParedes,self.__jardinDelantero) + "\n" + "="*40
+    
+    @property
+    def jardinDelantero(self):
+        return self.__jardinDelantero
+    @jardinDelantero.setter
+    def jardinDelantero(self, newJardin):
+        self.__jardinDelantero = newJardin
+
+#Clase Piso que hereda de HOGAR
+class Piso(Hogar):
+    '''
+    Clase piso. Necesita almenos cuatro parametros:
+    Material: Material con el que se contruye la casa
+    Numero de paredes: Cuantas paredes quieres que tenga tu casa
+    Plantas: Cuantas plantas quieres que tenga tu casa
+    Ascensor: Si quieres que tu casa posea ascensor (True o False)
+    '''
+    def __init__(self, material=None, numParedes=None, plantas=None, ascensor=None):
+        Hogar.__init__(self, material, numParedes)
+        self.__plantas = plantas
+        self.__ascensor = ascensor
+        if self.__ascensor == True:
+            self.__ascensor = "Si"
+        else:
+            self.__ascensor = "No"
+    
+    def info(self):
+        print("PISO:\nVivienda multifamiliar de varias plantas, y con departamentos separados. Suele tener ascensor")
+    
+    def __str__(self):
+        return '''
+        -PISO-
+        Material: {}
+        Numero de paredes: {}
+        Numero de plantas: {}
+        Ascensor: {}'''.format(self.material,self.numParedes, self.__plantas, self.__ascensor) + "\n" + "="*40
+    
+    @property
+    def plantas(self):
+        return self.__plantas
+    @plantas.setter
+    def plantas(self, newPlantas):
+        self.__plantas = newPLantas
+        
+    @property
+    def ascensor(self):
+        return self.__ascensor
+    @ascensor.setter
+    def ascensor(self, newAscensor):
+        self.__ascensor = newAscensor
+        
+#Clase MANSION que hereda de CHALE, y de HOGAR    
+class Mansion(Chale):
+    '''
+    Clase mansion. Necesita almenos seis parametros:
+    Material: Material con el que se contruye la casa
+    Numero de paredes: Cuantas paredes quieres que tenga tu casa
+    Numero de habitaciones: Cuantas habitaciones quieres que tenga tu casa
+    Jardin: Si quieres que tu casa tenga jardin (True o false)
+    Nivel de lujo: Cual es el nivel de lujo de tu casa ( de 0 a 100)
+    Garaje: Si quieres garaje en tu casa
+    '''
+#Hereda de CHALE y HOGAR, pero comop HOGAR es el abuelo, esta implicito y no necesito llamar su constructor
+    def __init__(self, material=None, numParedes=None, numHabitaciones=None, jardin=None, nivelLujo=None, garaje=None):
+        Chale.__init__(self, material, numParedes, numHabitaciones, jardin)
+        self.__nivelLujo = nivelLujo
+        self.__garaje = garaje
+        if self.__garaje == True:
+            self.__garaje = "Si"
+        else:
+            self.__garaje = "No"
+            
+    def info(self):
+        print("MANSION:\nUna vivienda lujosa." \
+              +" Se trata de una construcción suntuosa que suele disponer de un gran número de habitaciones" \
+              +" y de diversos detalles ostentosos")
+        
+    def __str__(self):
+        return '''
+        -MANSION-
+        Material: {}
+        Numero de paredes: {}
+        Jardin delantero: {}
+        Numero de habitaciones: {}
+        Nivel de lujo: {} sobre 100
+        Garaje: {}'''.format(self.material,self.numParedes,self.jardin, self.numHabitaciones,
+                        self.__nivelLujo, self.__garaje) + "\n" + "="*40
+    
+    @property
+    def nivelLujo(self):
+        return self.__nivelLujo
+    @nivelLujo.setter
+    def nivelLujo(self, newLujo):
+        self.__nivelLujo = newLujo
+    
+    @property
+    def garaje(self):
+        return self.__garaje
+    @garaje.setter
+    def garaje(self, newGaraje):
+        self.__garaje = newGaraje
+
+#Clase PISOADOSADO que tiene herencia multiple de ADOSADO y PISO
+class PisoAdosado(Adosado, Piso):
+    '''
+    Clase hogar basico. Necesita almenos seis parametros:
+    Material: Material con el que se contruye la casa
+    Numero de paredes: Cuantas paredes quieres que tenga tu casa
+    Plantas: Cuantas plantas quieres que tengas tu casa
+    Ascensor: Si quieres que tu casa tenga ascensor o no (True o False)
+    Jardin delantero: Si quieres que tu casa tenga jardin delantero (True o False)
+    Nivel de lujo: Cual es el nivel de lujo de tu casa ( de 0 a 100)
+    '''
+#Aqui tengo herencia multip`le, por eso llamo a los dos contructores, yt a cada unole mando la informacion que necesita
+    def __init__(self, material=None, numParedes=None, plantas=None, ascensor=None, jardinDelantero=None, nivelLujo=None):
+        Adosado.__init__(self, jardinDelantero=jardinDelantero)
+        Piso.__init__(self,  material, numParedes, plantas, ascensor)
+        self.__nivelLujo = nivelLujo
+        
+    def info(self):
+        print("PISO ADOSADO:\nVivienda multifamiliar de varias plantas, y con departamentos separados." \
+              +" Tiene otros edificios similares a los laterales")
+
+    
+    def __str__(self):
+        return '''
+        -PISO ADOSADO-
+        Material: {}
+        Numero de paredes: {}
+        Numero de plantas: {}
+        Jardin delantero: {}
+        Ascensor: {}
+        Nivel de lujo: {} sobre 100'''.format(self.material,self.numParedes,self.plantas,
+                                    self.jardinDelantero, self.ascensor, self.__nivelLujo) + "\n" + "="*40
+    
+    @property
+    def nivelLujo(self):
+        return self.__nivelLujo
+    @nivelLujo.setter
+    def nivelLujo(self, newLujo):
+        self.__nivelLujo = newLujo
+        
+#Este es el metodo polimorfico, muy sencillo, que nos muestra la descripcion esencial del objeto que queramos        
+def infoEdificio(obj):
+    obj.info()
+
+#Y este metodo lo he echo para ampliar un poco, para que se pueda crear un objeto al gusto del usuario. Posiblemente lo podria 
+#haber encapsulado mas, pues hay varias lineas que se repiten, pero no se me ocurria como. Espero que te guste
+def crearVivienda():
+    print("Esta funcion esta en desarrollo. Por fabor, escriba sin mayusculas, salvo para indicar los True o False. Gracias")
+    tipoVivienda = input("Que vivienda quieres crear, un chale, un adosado, un piso, una mansion o un piso adosado?: ")
+    if tipoVivienda == "chale":
+        tipoVivienda = Chale(input("De que material quieres que sea? "),
+                         input("Cuantas paredes quieres que tenga? "),
+                         bool(input("Quieres que tenga jardin? (True o False) ")),
+                         input("Cuantas habitaciones quieres tener? "))
+        print("\nSe ha creado una nueva vivienda:\n {}".format(tipoVivienda))
+        return tipoVivienda
+    elif tipoVivienda == "adosado":
+        tipoVivienda = Adosado(input("De que material quieres que sea? "),
+                         input("Cuantas paredes quieres que tenga? "),
+                         bool(input("Quieres que tenga jardin delantero? (True o False) ")))
+        print("\nSe ha creado una nueva vivienda:\n {}".format(tipoVivienda))
+        return tipoVivienda
+    elif tipoVivienda == "piso":
+        tipoVivienda = Piso(input("De que material quieres que sea? "),
+                             input("Cuantas paredes quieres que tenga? "), 
+                            input("Cuantas plantas quieres que tenga? "),
+                             bool(input("Quieres que tenga ascensor? (True o False) ")))
+        print("\nSe ha creado una nueva vivienda:\n {}".format(tipoVivienda))
+        return tipoVivienda
+    elif tipoVivienda == "mansion":
+        tipoVivienda = Mansion(input("De que material quieres que sea? "),
+                             input("Cuantas paredes quieres que tenga? "),
+                            input("Cuantas plantas quieres tener? "),
+                               bool(input("Quieres ascensor en tu piso? ")),
+                             bool(input("Quieres que tenga garaje? (True o False) ")))
+        print("\nSe ha creado una nueva vivienda:\n {}".format(tipoVivienda))
+        return tipoVivienda
+    elif tipoVivienda == "piso adosado":
+        tipoVivienda = PisoAdosado(input("De que material quieres que sea? "),
+                             input("Cuantas paredes quieres que tenga? "),
+                               input("Cuantas plantas quieres tener? "),
+                                bool(input("Quieres ascensor en tu edificio? (True o False) ")),
+                             bool(input("Quieres que tenga jardin delantero? (True o False) ")),
+                            input("Cual es el nivel de lujo que deseas? (de 0 a 100) "))
+        print("\nSe ha creado una nueva vivienda:\n {}".format(tipoVivienda))
+        return tipoVivienda
+    else:
+        print("Esa opcion no es posible. Intentelo de nuevo porfabor")
+        crearVivienda()
